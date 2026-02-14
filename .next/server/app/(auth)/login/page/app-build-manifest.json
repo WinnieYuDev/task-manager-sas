@@ -1,0 +1,24 @@
+{
+  "pages": {
+    "/(auth)/login/page": [
+      "static/chunks/[root of the server]__b845a2._.css",
+      "static/chunks/node_modules_9c6fb4._.js",
+      "static/chunks/app_9e4cf7._.js",
+      "static/chunks/app_layout_tsx_36ac26._.js",
+      "static/chunks/node_modules_d355f2._.js",
+      "static/chunks/_0b6685._.js",
+      "static/chunks/app_not-found_tsx_9f797d._.js",
+      "static/chunks/node_modules_deaeb5._.js",
+      "static/chunks/_ff3503._.js",
+      "static/chunks/app_(auth)_login_page_tsx_9f797d._.js",
+      "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
+      "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
+      "static/chunks/node_modules_next_dist_client_9bb038._.js",
+      "static/chunks/node_modules_next_dist_d09de6._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636a._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_ce799c._.js",
+      "static/chunks/_c4c472._.js",
+      "static/chunks/_cb9de2._.js"
+    ]
+  }
+}

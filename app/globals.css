@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* TaskBloom brand */
+  --navy: #0f172a;
+  --navy-foreground: #f8fafc;
+  --bloom-purple: #7c3aed;
+  --bloom-purple-muted: #a78bfa;
+  --electric-blue: #3b82f6;
+  --soft-rose: #f472b6;
+  --mint: #34d399;
+  /* Food-inspired palette */
+  --strawberry: #e63946;
+  --avocado: #2a9d8f;
+  --blueberry: #457b9d;
+  --lemon: #f4d35e;
+  --dragonfruit: #ff4d8d;
+  --grape: #6a4c93;
+  --mango: #f77f00;
+  /* Semantic (food-based for dashboard) */
+  --color-primary: var(--strawberry);
+  --color-success: var(--avocado);
+  --color-info: var(--blueberry);
+  --color-warning: var(--lemon);
+  --color-danger: var(--strawberry);
+  --color-accent: var(--grape);
+  /* Surfaces */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --muted: #64748b;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --border: #334155;
+  --muted: #94a3b8;
+  --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.15);
+  --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@layer base {
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
+  }
+}
+
+/* Glass nav */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.dark .glass {
+  background: rgba(15, 23, 42, 0.8);
+}

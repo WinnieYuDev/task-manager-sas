@@ -1,0 +1,2 @@
+{"location":"Sidebar.tsx","message":"Duplicate React keys from item.href","data":{"keysByHref":["/dashboard","/tasks","/analytics","/settings","/organization","/settings","/upgrade"],"duplicateKeys":["/settings"]},"timestamp":1771050241718,"hypothesisId":"H1"}
+{"location":"Sidebar.tsx","message":"Duplicate React keys from item.href","data":{"keysByHref":["/dashboard","/tasks","/analytics","/settings","/organization","/settings","/upgrade"],"duplicateKeys":["/settings"]},"timestamp":1771050241718,"hypothesisId":"H1"}
