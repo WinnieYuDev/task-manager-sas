@@ -12,6 +12,7 @@ import type * as analytics from "../analytics.js";
 import type * as auth from "../auth.js";
 import type * as debugAuthEnv from "../debugAuthEnv.js";
 import type * as http from "../http.js";
+import type * as invitations from "../invitations.js";
 import type * as seed from "../seed.js";
 import type * as subscriptions from "../subscriptions.js";
 import type * as tasks from "../tasks.js";
@@ -28,6 +29,7 @@ declare const fullApi: ApiFromModules<{
   auth: typeof auth;
   debugAuthEnv: typeof debugAuthEnv;
   http: typeof http;
+  invitations: typeof invitations;
   seed: typeof seed;
   subscriptions: typeof subscriptions;
   tasks: typeof tasks;

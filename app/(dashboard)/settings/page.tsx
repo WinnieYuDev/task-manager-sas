@@ -19,8 +19,8 @@ export default function SettingsPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (user?.name !== undefined && name === "") setName(user.name ?? "");
-  }, [user?.name, name]);
+    if (user?.name != null) setName(user.name);
+  }, [user?.name]);
 
   async function handleSaveProfile() {
     setSaving(true);

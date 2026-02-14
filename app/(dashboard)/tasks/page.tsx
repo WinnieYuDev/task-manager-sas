@@ -212,7 +212,7 @@ export default function TasksPage() {
             </div>
           ) : (
             <ul className="space-y-2">
-              {tasks.map((task: { _id: Id<"tasks">; title: string; description?: string; completed: boolean; priority: Priority; dueDate?: number }) => (
+              {tasks.map((task) => (
                 <li
                   key={task._id}
                   className={cn(

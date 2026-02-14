@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthActions } from "@convex-dev/auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -12,8 +12,6 @@ import { Input } from "@/components/ui/input";
 export default function LoginPage() {
   const { signIn } = useAuthActions();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -25,7 +23,7 @@ export default function LoginPage() {
     try {
       await signIn("password", formData);
       toast.success("Signed in successfully");
-      router.push(redirect && redirect.startsWith("/") ? redirect : "/dashboard");
+      router.push("/dashboard");
       router.refresh();
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Sign in failed";

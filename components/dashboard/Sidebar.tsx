@@ -6,10 +6,8 @@ import {
   LayoutDashboard,
   ListTodo,
   BarChart3,
-  User,
   Settings,
   Sparkles,
-  Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -17,31 +15,12 @@ const nav = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/tasks", label: "Tasks", icon: ListTodo },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/settings", label: "Profile", icon: User },
-  { href: "/organization", label: "Organization", icon: Building2 },
   { href: "/settings", label: "Settings", icon: Settings },
   { href: "/upgrade", label: "Upgrade", icon: Sparkles },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
-  // #region agent log
-  const keysByHref = nav.map((i) => i.href);
-  const duplicateKeys = keysByHref.filter((k, i) => keysByHref.indexOf(k) !== i);
-  if (duplicateKeys.length > 0) {
-    fetch("http://127.0.0.1:7243/ingest/2ddb888b-b0fb-4347-90f7-e4388c6ac6bf", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        location: "Sidebar.tsx",
-        message: "Duplicate React keys from item.href",
-        data: { keysByHref, duplicateKeys },
-        timestamp: Date.now(),
-        hypothesisId: "H1",
-      }),
-    }).catch(() => {});
-  }
-  // #endregion
 
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-64 border-r border-[var(--border)] bg-[var(--card)]">
@@ -58,7 +37,7 @@ export function Sidebar() {
               (item.href !== "/dashboard" && pathname.startsWith(item.href));
             return (
               <Link
-                key={item.label}
+                key={item.href}
                 href={item.href}
                 className={cn(
                   "flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-colors",

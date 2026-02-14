@@ -24,16 +24,8 @@ A premium SaaS task management platform with a marketing landing page, authentic
 
    ```bash
    cd "Task List App - Winnie"
-   npm install
+   npm install --legacy-peer-deps
    ```
-
-   If you see **`EBADPLATFORM` / `inotify`** on Windows, run instead:
-
-   ```bash
-   npm install --legacy-peer-deps --force
-   ```
-
-   (`.npmrc` sets `legacy-peer-deps`; `--force` skips the Linux-only `inotify` platform check so install completes on Windows.)
 
 2. **Convex**
 
@@ -72,8 +64,6 @@ A premium SaaS task management platform with a marketing landing page, authentic
    ```
 
    Open [http://localhost:3000](http://localhost:3000).
-
-   **Note:** Use `npm run dev` (runs this project’s script). Do not use `npx dev run`—that is a different package and can trigger the inotify/Windows install error.
 
 ## Project structure
 

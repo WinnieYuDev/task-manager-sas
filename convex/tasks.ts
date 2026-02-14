@@ -128,29 +128,6 @@ export const toggleComplete = mutation({
   },
 });
 
-// For dashboard calendar: tasks with dueDate in [startMs, endMs) (not completed)
-export const listByDueDateRange = query({
-  args: {
-    startMs: v.number(),
-    endMs: v.number(),
-  },
-  handler: async (ctx, args) => {
-    const userId = await auth.getUserId(ctx);
-    if (!userId) return [];
-    const tasks = await ctx.db
-      .query("tasks")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
-      .collect();
-    return tasks.filter(
-      (t) =>
-        t.dueDate != null &&
-        t.dueDate >= args.startMs &&
-        t.dueDate < args.endMs &&
-        !t.completed
-    );
-  },
-});
-
 // For dashboard: tasks due today
 export const dueToday = query({
   args: {},
@@ -170,30 +147,5 @@ export const dueToday = query({
     return tasks.filter(
       (t) => t.dueDate != null && t.dueDate >= start && t.dueDate < end && !t.completed
     );
-  },
-});
-
-// Tasks due in the next 7 days (not completed), ordered by due date
-export const dueSoon = query({
-  args: {},
-  handler: async (ctx) => {
-    const userId = await auth.getUserId(ctx);
-    if (!userId) return [];
-    const tasks = await ctx.db
-      .query("tasks")
-      .withIndex("by_user", (q) => q.eq("userId", userId))
-      .collect();
-    const now = Date.now();
-    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
-    const end = now + sevenDaysMs;
-    const filtered = tasks.filter(
-      (t) =>
-        t.dueDate != null &&
-        t.dueDate >= now &&
-        t.dueDate <= end &&
-        !t.completed
-    );
-    filtered.sort((a, b) => (a.dueDate ?? 0) - (b.dueDate ?? 0));
-    return filtered;
   },
 });

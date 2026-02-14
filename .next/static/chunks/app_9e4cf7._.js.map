@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/winni/.cursor/projects/Task%20List%20App%20-%20Winnie/app/providers.tsx"],"sourcesContent":["\"use client\";\r\n\r\nimport { ConvexReactClient } from \"convex/react\";\r\nimport { ConvexAuthProvider } from \"@convex-dev/auth/react\";\r\nimport { ThemeProvider } from \"next-themes\";\r\nimport { Toaster } from \"sonner\";\r\n\r\nconst convex = new ConvexReactClient(\r\n  process.env.NEXT_PUBLIC_CONVEX_URL ?? \"https://placeholder.convex.cloud\"\r\n);\r\n\r\nexport function Providers({ children }: { children: React.ReactNode }) {\r\n  return (\r\n    <ConvexAuthProvider client={convex}>\r\n      <ThemeProvider attribute=\"class\" defaultTheme=\"system\" enableSystem>\r\n        {children}\r\n        <Toaster richColors position=\"top-right\" />\r\n      </ThemeProvider>\r\n    </ConvexAuthProvider>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;AAEA;AAEA;AACA;AAHA;AAME;AALF;AAHA;;;;;;AAOA,MAAM,SAAS,IAAI,2JAAA,CAAA,oBAAiB,CAClC,4EAAsC;AAGjC,SAAS,UAAU,EAAE,QAAQ,EAAiC;IACnE,qBACE,6LAAC,oKAAA,CAAA,qBAAkB;QAAC,QAAQ;kBAC1B,cAAA,6LAAC,mJAAA,CAAA,gBAAa;YAAC,WAAU;YAAQ,cAAa;YAAS,YAAY;;gBAChE;8BACD,6LAAC,2IAAA,CAAA,UAAO;oBAAC,UAAU;oBAAC,UAAS;;;;;;;;;;;;;;;;;AAIrC;KATgB"}},
-    {"offset": {"line": 59, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}

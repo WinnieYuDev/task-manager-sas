@@ -2,7 +2,7 @@
 
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { TopBar } from "@/components/dashboard/TopBar";
@@ -17,18 +17,22 @@ export function DashboardShell({
   const seedTasks = useMutation(api.seed.seedTasksForNewUser);
   const user = useQuery(api.users.getCurrentUser);
   const taskList = useQuery(api.tasks.list, {});
+  const ensuredRef = useRef(false);
+  const seededRef = useRef(false);
 
   useEffect(() => {
     if (user === null) {
       router.replace("/login");
       return;
     }
-    if (!user) return;
+    if (!user || ensuredRef.current) return;
+    ensuredRef.current = true;
     ensureProfile({}).catch(() => {});
   }, [user, ensureProfile, router]);
 
   useEffect(() => {
-    if (!taskList?.page?.length && taskList?.isDone) {
+    if (!taskList?.page?.length && taskList?.isDone && !seededRef.current) {
+      seededRef.current = true;
       seedTasks({}).catch(() => {});
     }
   }, [taskList, seedTasks]);

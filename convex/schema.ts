@@ -18,7 +18,6 @@ export default defineSchema({
       v.union(v.literal("free"), v.literal("pro"), v.literal("team"))
     ),
     stripeCustomerId: v.optional(v.string()),
-    defaultOrganizationId: v.optional(v.id("organizations")),
     createdAt: v.optional(v.number()),
   })
     .index("email", ["email"]),
@@ -49,34 +48,10 @@ export default defineSchema({
     createdAt: v.number(),
   }).index("by_user", ["userId"]),
 
-  organizations: defineTable({
-    name: v.string(),
-    createdBy: v.id("users"),
-    createdAt: v.number(),
-  }).index("by_createdBy", ["createdBy"]),
-
-  organizationMembers: defineTable({
-    organizationId: v.id("organizations"),
-    userId: v.id("users"),
-    role: v.union(
-      v.literal("owner"),
-      v.literal("admin"),
-      v.literal("member")
-    ),
-    joinedAt: v.number(),
-  })
-    .index("by_organization", ["organizationId"])
-    .index("by_user", ["userId"]),
-
   invitations: defineTable({
-    organizationId: v.id("organizations"),
-    email: v.string(),
-    role: v.union(v.literal("member"), v.literal("admin")),
-    invitedBy: v.id("users"),
-    status: v.union(v.literal("pending"), v.literal("accepted")),
     token: v.string(),
+    email: v.optional(v.string()),
+    inviterId: v.optional(v.id("users")),
     createdAt: v.number(),
-  })
-    .index("by_organization", ["organizationId"])
-    .index("by_token", ["token"]),
+  }).index("by_token", ["token"]),
 });
