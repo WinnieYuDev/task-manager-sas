@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { DashboardPreviewMock } from "@/components/marketing/DashboardPreviewMock";
 import { motion } from "framer-motion";
 
 export function Hero() {
@@ -52,8 +53,8 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 shadow-glass"
         >
-          <div className="aspect-video rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-[var(--muted)]">
-            Dashboard preview
+          <div className="aspect-video rounded-xl overflow-hidden">
+            <DashboardPreviewMock />
           </div>
         </motion.div>
       </div>

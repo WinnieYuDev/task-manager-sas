@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { InteractiveTaskListMock } from "@/components/marketing/InteractiveTaskListMock";
 
 export function ProductPreview() {
   return (
@@ -28,8 +29,8 @@ export function ProductPreview() {
           viewport={{ once: true }}
           className="mt-12 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-glass"
         >
-          <div className="aspect-video rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-[var(--muted)]">
-            Interactive app screenshot placeholder
+          <div className="aspect-video rounded-xl overflow-hidden">
+            <InteractiveTaskListMock />
           </div>
         </motion.div>
       </div>
