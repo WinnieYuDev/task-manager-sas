@@ -29,6 +29,8 @@ export const createOrUpdate = mutation({
   handler: async (ctx, args) => {
     const currentUserId = await auth.getUserId(ctx);
     if (!currentUserId) throw new Error("Unauthenticated");
+    // Only allow updating own subscription (or use internal mutation for Stripe webhook)
+    if (currentUserId !== args.userId) throw new Error("Forbidden");
     const existing = await ctx.db
       .query("subscriptions")
       .withIndex("by_user", (q) => q.eq("userId", args.userId))

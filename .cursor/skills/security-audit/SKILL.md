@@ -1,6 +1,6 @@
 ---
 name: security-audit
-description: Runs a security audit for auth, API, and data handling. Use when the user asks for a security audit, security review, penetration check, or when reviewing authentication, authorization, or Convex backend code.
+description: Runs a security audit for auth, API, and data handling. Use when the user asks for a security audit, full security audit, security review, penetration check, or when reviewing authentication, authorization, or Convex backend code. Trigger phrases: "security audit", "security review", "auth review", "Convex backend security".
 ---
 
 # Security Audit

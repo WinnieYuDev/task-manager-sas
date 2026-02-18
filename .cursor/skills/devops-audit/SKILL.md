@@ -1,6 +1,6 @@
 ---
 name: devops-audit
-description: Audits DevOps, deployment, and infrastructure for this project. Use when the user asks for a DevOps audit, deployment review, CI/CD check, or infrastructure review.
+description: Audits DevOps, deployment, and infrastructure. Use when the user asks for a DevOps audit, deployment review, CI/CD check, infrastructure review, deploy readiness, or package.json/Convex config check. Trigger phrases: "DevOps audit", "deployment review", "deploy readiness", "CI/CD", "build and env check".
 ---
 
 # DevOps Audit

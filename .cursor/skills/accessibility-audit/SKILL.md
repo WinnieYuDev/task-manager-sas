@@ -1,6 +1,6 @@
 ---
 name: accessibility-audit
-description: Runs an accessibility (a11y) audit using code review and optional browser testing. Use when the user asks for an accessibility audit, a11y check, WCAG review, or screen reader compatibility.
+description: Runs an accessibility (a11y) audit via code review and optional browser testing. Use when the user asks for an accessibility audit, a11y check, WCAG review, or screen reader compatibility. Trigger phrases: "accessibility audit", "a11y", "WCAG", "screen reader", "focus and keyboard", "semantic HTML and labels". If a URL is provided, include browser snapshot checks.
 ---
 
 # Accessibility Audit

@@ -1,6 +1,6 @@
 ---
 name: seo-audit
-description: Runs an SEO audit using code review and optional browser inspection. Use when the user asks for an SEO audit, meta tags check, or search engine optimization review.
+description: Runs an SEO audit via code review and optional browser inspection. Use when the user asks for an SEO audit, meta tags check, or search engine optimization review. Trigger phrases: "SEO audit", "meta tags", "metadata", "search engine optimization", "title and description". If a URL is provided, verify rendered title, meta, and h1 in the browser.
 ---
 
 # SEO Audit
