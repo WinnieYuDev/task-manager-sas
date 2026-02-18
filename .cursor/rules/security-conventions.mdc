@@ -1,0 +1,19 @@
+---
+description: Security conventions for auth and API code
+globs: "**/convex/auth*.ts,**/convex/**/*.ts,**/app/(auth)/**/*,**/middleware.ts"
+alwaysApply: false
+---
+
+# Security Conventions
+
+## Auth and identity
+- Never log or expose tokens or session secrets.
+- Validate Convex auth in mutations/queries; do not trust client-only checks for sensitive data.
+- Use Convex Auth or verified identity for all user-scoped data access.
+
+## Input and data
+- Validate and sanitize all inputs (Convex validators, env vars).
+- Prefer parameterized queries / Convex APIs; no string concatenation for user input in queries.
+
+## Sensitive paths
+- `convex/auth*.ts`, `middleware.ts`, and `app/(auth)/**`: treat as security-critical; any change should preserve or improve auth guarantees.

@@ -27,13 +27,17 @@ export function DashboardShell({
     }
     if (!user || ensuredRef.current) return;
     ensuredRef.current = true;
-    ensureProfile({}).catch(() => {});
+    ensureProfile({}).catch((e) => {
+      console.error("DashboardShell: ensureProfile failed", e);
+    });
   }, [user, ensureProfile, router]);
 
   useEffect(() => {
     if (!taskList?.page?.length && taskList?.isDone && !seededRef.current) {
       seededRef.current = true;
-      seedTasks({}).catch(() => {});
+      seedTasks({}).catch((e) => {
+        console.error("DashboardShell: seedTasks failed", e);
+      });
     }
   }, [taskList, seedTasks]);
 

@@ -5,22 +5,25 @@ import { api } from "@/convex/_generated/api";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Id } from "@/convex/_generated/dataModel";
+import type { Doc } from "@/convex/_generated/dataModel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { Modal } from "@/components/ui/modal";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Check, Pencil, Trash2, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Plus } from "lucide-react";
+import { TaskRow } from "./TaskRow";
 
 type Priority = "low" | "medium" | "high";
+
+const SORT_OPTIONS = ["dueDate", "priority", "createdAt"] as const;
+type SortBy = (typeof SORT_OPTIONS)[number];
 
 export default function TasksPage() {
   const [search, setSearch] = useState("");
   const [filterCompleted, setFilterCompleted] = useState<boolean | undefined>();
   const [filterPriority, setFilterPriority] = useState<Priority | undefined>();
-  const [sortBy, setSortBy] = useState<"dueDate" | "priority" | "createdAt">("createdAt");
+  const [sortBy, setSortBy] = useState<SortBy>("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [modalOpen, setModalOpen] = useState(false);
   const [editingId, setEditingId] = useState<Id<"tasks"> | null>(null);
@@ -42,7 +45,7 @@ export default function TasksPage() {
   const removeTask = useMutation(api.tasks.remove);
   const toggleComplete = useMutation(api.tasks.toggleComplete);
 
-  const tasks = taskList?.page ?? [];
+  const tasks: Doc<"tasks">[] = taskList?.page ?? [];
 
   async function handleCreate() {
     if (!formTitle.trim()) return;
@@ -61,15 +64,16 @@ export default function TasksPage() {
       setFormPriority("medium");
       setFormDueDate("");
     } catch (e) {
+      console.error("TasksPage: create failed", e);
       toast.error(e instanceof Error ? e.message : "Failed to create");
     }
   }
 
   async function handleUpdate() {
     if (!editingId || !formTitle.trim()) return;
+    const task = tasks.find((t) => t._id === editingId);
+    if (!task) return;
     try {
-      const task = tasks.find((t: { _id: Id<"tasks"> }) => t._id === editingId);
-      if (!task) return;
       await updateTask({
         id: editingId,
         title: formTitle.trim(),
@@ -85,6 +89,7 @@ export default function TasksPage() {
       setFormPriority("medium");
       setFormDueDate("");
     } catch (e) {
+      console.error("TasksPage: update failed", e);
       toast.error(e instanceof Error ? e.message : "Failed to update");
     }
   }
@@ -94,6 +99,7 @@ export default function TasksPage() {
       await removeTask({ id });
       toast.success("Task deleted");
     } catch (e) {
+      console.error("TasksPage: delete failed", e);
       toast.error(e instanceof Error ? e.message : "Failed to delete");
     }
   }
@@ -103,11 +109,12 @@ export default function TasksPage() {
       await toggleComplete({ id });
       toast.success("Task updated");
     } catch (e) {
+      console.error("TasksPage: toggle failed", e);
       toast.error(e instanceof Error ? e.message : "Failed to update");
     }
   }
 
-  function openEdit(task: (typeof tasks)[0]) {
+  function openEdit(task: Doc<"tasks">) {
     setEditingId(task._id);
     setFormTitle(task.title);
     setFormDescription(task.description ?? "");
@@ -172,7 +179,7 @@ export default function TasksPage() {
             <select
               value={sortBy}
               onChange={(e) =>
-                setSortBy(e.target.value as "dueDate" | "priority" | "createdAt")
+                setSortBy(e.target.value as SortBy)
               }
               className="rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm"
             >
@@ -213,62 +220,13 @@ export default function TasksPage() {
           ) : (
             <ul className="space-y-2">
               {tasks.map((task) => (
-                <li
+                <TaskRow
                   key={task._id}
-                  className={cn(
-                    "flex items-center gap-3 rounded-xl border border-[var(--border)] px-4 py-3 transition-colors",
-                    task.completed && "opacity-60"
-                  )}
-                >
-                  <button
-                    type="button"
-                    onClick={() => handleToggle(task._id)}
-                    className="rounded-full border-2 border-[var(--border)] p-0.5 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
-                  >
-                    {task.completed ? (
-                      <Check className="size-5 text-avocado" />
-                    ) : (
-                      <span className="block size-5 rounded-full" />
-                    )}
-                  </button>
-                  <div className="min-w-0 flex-1">
-                    <p
-                      className={cn(
-                        "font-medium",
-                        task.completed && "line-through text-[var(--muted)]"
-                      )}
-                    >
-                      {task.title}
-                    </p>
-                    {task.description && (
-                      <p className="truncate text-sm text-[var(--muted)]">
-                        {task.description}
-                      </p>
-                    )}
-                  </div>
-                  <Badge variant={task.priority}>{task.priority}</Badge>
-                  {task.dueDate && (
-                    <span className="text-xs text-[var(--muted)]">
-                      {new Date(task.dueDate).toLocaleDateString()}
-                    </span>
-                  )}
-                  <div className="flex gap-1">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => openEdit(task)}
-                    >
-                      <Pencil className="size-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => handleDelete(task._id)}
-                    >
-                      <Trash2 className="size-4 text-strawberry" />
-                    </Button>
-                  </div>
-                </li>
+                  task={task}
+                  onToggle={handleToggle}
+                  onEdit={openEdit}
+                  onDelete={handleDelete}
+                />
               ))}
             </ul>
           )}

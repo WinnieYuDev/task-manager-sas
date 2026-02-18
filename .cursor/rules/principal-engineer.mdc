@@ -1,0 +1,34 @@
+---
+description: Principal Engineer standards — architecture, patterns, and quality
+alwaysApply: true
+---
+
+# Principal Engineer Standards
+
+## Stack context
+- Next.js 15 (App Router), React 19, Convex, Tailwind, Radix UI
+
+## Code quality
+- Prefer small, single-purpose functions and components.
+- Use TypeScript strictly; avoid `any`; prefer explicit types for API boundaries.
+- Colocate logic with UI where it’s used; extract shared logic to hooks or `lib/`.
+- Handle loading and error states explicitly (no silent failures).
+
+## Error handling
+```typescript
+// Prefer: log and rethrow or return Result
+try {
+  await action();
+} catch (e) {
+  logger.error('Context', { error: e });
+  throw new AppError('User message', { cause: e });
+}
+```
+
+## Naming and structure
+- Components: PascalCase. Files: PascalCase for components, camelCase for utilities.
+- Convex: `convex/*.ts` for functions; keep mutations/queries focused and validated.
+
+## Performance
+- Use React Server Components by default; add "use client" only when needed (hooks, browser APIs, interactivity).
+- Lazy-load heavy client components with `next/dynamic` where appropriate.

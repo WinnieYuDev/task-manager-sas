@@ -14,6 +14,28 @@ const taskValidator = {
   dueDate: v.optional(v.number()),
 };
 
+const taskDocValidator = v.object({
+  _id: v.id("tasks"),
+  _creationTime: v.number(),
+  title: v.string(),
+  description: v.optional(v.string()),
+  completed: v.boolean(),
+  priority: v.union(
+    v.literal("low"),
+    v.literal("medium"),
+    v.literal("high")
+  ),
+  dueDate: v.optional(v.number()),
+  userId: v.id("users"),
+  createdAt: v.number(),
+});
+
+const listResultValidator = v.object({
+  page: v.array(taskDocValidator),
+  isDone: v.boolean(),
+  continueCursor: v.union(v.string(), v.null()),
+});
+
 export const list = query({
   args: {
     limit: v.optional(v.number()),
@@ -32,6 +54,7 @@ export const list = query({
     ),
     sortOrder: v.optional(v.union(v.literal("asc"), v.literal("desc"))),
   },
+  returns: listResultValidator,
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) return { page: [], isDone: true, continueCursor: null };
@@ -77,6 +100,7 @@ export const list = query({
 
 export const create = mutation({
   args: taskValidator,
+  returns: v.id("tasks"),
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
@@ -93,6 +117,7 @@ export const update = mutation({
     id: v.id("tasks"),
     ...taskValidator,
   },
+  returns: v.id("tasks"),
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
@@ -106,6 +131,7 @@ export const update = mutation({
 
 export const remove = mutation({
   args: { id: v.id("tasks") },
+  returns: v.id("tasks"),
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
@@ -118,6 +144,7 @@ export const remove = mutation({
 
 export const toggleComplete = mutation({
   args: { id: v.id("tasks") },
+  returns: v.id("tasks"),
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) throw new Error("Unauthenticated");
@@ -131,6 +158,7 @@ export const toggleComplete = mutation({
 // For dashboard: tasks due today
 export const dueToday = query({
   args: {},
+  returns: v.array(taskDocValidator),
   handler: async (ctx) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) return [];
