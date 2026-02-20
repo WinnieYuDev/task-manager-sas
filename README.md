@@ -1,110 +1,84 @@
-# TaskBloom
+# TaskBloom — Task Management & Productivity (Next.js + Convex)
 
-**Where productivity blossoms.**
+TaskBloom is a premium SaaS task management platform that helps users organize tasks, track progress, and stay productive. It provides a marketing landing page, authenticated dashboard, real-time task sync, and subscription-ready architecture. It is built as an educational/portfolio project using Next.js 15 (App Router) and Convex.
 
-A premium SaaS task management platform with a marketing landing page, authenticated dashboard, Convex backend, and subscription-ready architecture.
+**website preview**
+
+Run the app and open http://localhost:3000 for a preview.
+
+## Main features
+
+- Displays a marketing landing page (hero, features, pricing, testimonials) and an authenticated dashboard at `/dashboard`
+- Real-time task management: create, edit, delete, and toggle completion with instant sync via Convex
+- Filtering and sorting of tasks by priority, status, and search; overview with completion progress, due today, and streak
+- Analytics: tasks completed per week, priority distribution, and completion trend (Recharts)
+- Email/password authentication (Convex Auth) with protected dashboard routes
+- Settings: profile, theme toggle (light/dark), subscription placeholder, and danger zone
+- Upgrade flow with pricing cards and Pro feature gated by subscription status (Stripe-ready)
+- Food-inspired design palette (Strawberry, Avocado, Blueberry) and TaskBloom brand; responsive UI with Radix primitives
 
 ## Tech stack
 
-- **Frontend:** Next.js 15 (App Router), TypeScript, Tailwind CSS, Framer Motion
-- **Backend:** Convex (database, auth, server functions)
-- **Auth:** Convex Auth (email/password)
-- **UI:** Radix UI primitives, Lucide icons, Recharts, Sonner toasts
+- **Runtime & framework:** Node.js, Next.js 15 (App Router), React 19, TypeScript
+- **Styling:** Tailwind CSS
+- **Backend & database:** Convex (database, auth, server functions)
+- **Authentication:** Convex Auth (email/password)
+- **UI & motion:** Radix UI primitives, Lucide icons, Framer Motion, Recharts, Sonner toasts
 
-## Getting started
+## Launching the app
 
-### Prerequisites
+**Clone:**
 
-- Node.js 18+
-- npm or yarn
-
-### Setup
-
-1. **Clone and install**
-
-   ```bash
-   cd "Task List App - Winnie"
-   npm install --legacy-peer-deps
-   ```
-
-2. **Convex**
-
-   Link your Convex project (creates one if needed):
-
-   ```bash
-   npx convex dev
-   ```
-
-   Follow the prompts to log in and create or link a deployment. This generates `convex/_generated` and sets `CONVEX_DEPLOYMENT` in your environment.
-
-3. **Environment variables**
-
-   Copy the example env file and set your Convex URL:
-
-   ```bash
-   cp .env.local.example .env.local
-   ```
-
-   Set `NEXT_PUBLIC_CONVEX_URL` to your Convex deployment URL (shown in the Convex dashboard or after `npx convex dev`).
-
-   **Convex Auth (required for login/signup):** Set these in the **Convex dashboard** (Deployment → Settings → Environment Variables), not in `.env.local`:
-
-   - `SITE_URL` — e.g. `http://localhost:3000` for local dev (optional if only using passwords)
-   - `JWT_PRIVATE_KEY` and `JWKS` — required. Generate them once:
-     1. Install deps: `npm install --legacy-peer-deps`
-     2. Run: `npm run generate-auth-keys`
-     3. Copy the two lines of output and add them as two separate environment variables in the [Convex dashboard](https://dashboard.convex.dev) under your deployment’s Environment Variables (paste each line as name=value).
-
-4. **Run the app**
-
-   With Convex dev running in one terminal:
-
-   ```bash
-   npm run dev
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000).
-
-## Project structure
-
-```
-app/
-  (marketing)/     # Landing page at /
-  (auth)/          # /login, /signup
-  (dashboard)/     # /dashboard, /tasks, /analytics, /settings, /upgrade
-components/
-  marketing/       # Hero, Features, Pricing, etc.
-  dashboard/       # Sidebar, TopBar
-  ui/              # Button, Card, Input, Badge, Modal, Skeleton
-convex/
-  schema.ts        # users, tasks, subscriptions (+ auth tables)
-  auth.ts          # Convex Auth (Password provider)
-  http.ts          # Auth HTTP routes
-  tasks.ts         # Task CRUD and queries
-  users.ts         # Profile and ensureProfile
-  subscriptions.ts # Subscription scaffold (Stripe-ready)
-  seed.ts          # Seed tasks for new users
-  analytics.ts     # Charts data
-lib/
-  utils.ts         # cn(), priority colors
+```bash
+git clone https://github.com/WinnieYuDev/task-bloom
+cd task-bloom
 ```
 
-## Features
+(Or clone this repository and `cd` into the project folder.)
 
-- **Marketing:** Animated landing page with hero, features, pricing, testimonials, CTA
-- **Auth:** Email/password sign up and sign in via Convex Auth; protected dashboard routes
-- **Dashboard:** Overview with completion progress, due today, streak, priority breakdown
-- **Tasks:** Create, edit, delete, toggle complete; filter by priority/status; sort; search
-- **Analytics:** Tasks completed per week, priority distribution, completion trend
-- **Settings:** Profile, theme toggle, subscription placeholder, danger zone
-- **Upgrade:** Pricing cards, Pro feature gated by `subscriptionStatus`, monthly/yearly toggle (UI)
-- **Design:** Food-inspired palette (Strawberry, Avocado, Blueberry, etc.) and TaskBloom brand tokens; light/dark mode
+**Install dependencies:**
 
-## Deployment
+```bash
+npm install --legacy-peer-deps
+```
 
-- **Frontend:** Deploy to [Vercel](https://vercel.com). Set `NEXT_PUBLIC_CONVEX_URL` and (if using auth) ensure `SITE_URL` in Convex matches your production URL.
-- **Backend:** Convex is deployed separately; `npx convex dev` deploys to your Convex cloud project.
+**Convex:** Link your Convex project (creates one if needed):
 
-## License
+```bash
+npx convex dev
+```
+
+Log in and create or link a deployment. This generates `convex/_generated` and sets `CONVEX_DEPLOYMENT` in your environment.
+
+**Environment variables:** Create a `.env.local` file in the project root (see `.env.local.example`). Set:
+
+- `NEXT_PUBLIC_CONVEX_URL` — your Convex deployment URL (from the Convex dashboard or after `npx convex dev`)
+
+**Convex Auth (required for login/signup):** In the **Convex dashboard** (Deployment → Settings → Environment Variables), add:
+
+- `SITE_URL` — e.g. `http://localhost:3000` for local dev
+- `JWT_PRIVATE_KEY` and `JWKS` — run `npm run generate-auth-keys` and paste the two output lines as separate env vars in the [Convex dashboard](https://dashboard.convex.dev).
+
+**Start the app:**
+
+With `npx convex dev` running in one terminal:
+
+```bash
+npm run dev
+```
+
+Open http://localhost:3000 in your browser.
+
+**Examples:** Take a look at similar projects!
+
+- FoodGuard (MVC): https://github.com/WinnieYuDev/food-guard-mvc-demo
+- Boston Community Swap: https://github.com/WinnieYuDev/community-trade-fullstack
+- Home Cooking Reviews: https://github.com/WinnieYuDev/home-cooking-fullstack
+
+## Backend technologies
+
+Convex: https://www.convex.dev
+
+## License & credits
 
 Private / portfolio use.
